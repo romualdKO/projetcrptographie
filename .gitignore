@@ -1,0 +1,6 @@
+__pycache__/
+*.py[cod]
+cle_privee*.pem
+cle_privee*.json
+cle_privee_protegee.json
+cle_publique*.pem

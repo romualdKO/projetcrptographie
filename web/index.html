@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101820">
+  <title>Cryptographie | Echange sécurisé</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Accueil">
+        <span class="brand-mark" aria-hidden="true"><span></span><span></span><span></span></span>
+        <span class="brand-copy">
+          <strong>CRYPTOLINK</strong>
+          <small>MESSAGERIE CHIFFREE</small>
+        </span>
+      </a>
+      <div class="topbar-meta">
+        <span class="protocol-tag">RSA-OAEP <i></i> AES-256-GCM</span>
+        <span class="connection-state" id="connectionState"><span class="state-dot"></span><span id="connectionLabel">Connexion...</span></span>
+      </div>
+    </header>
+
+    <main>
+      <section class="intro-row" aria-labelledby="pageTitle">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-line"></span> CANAL PRIVE <span id="roleCaption">/ INITIALISATION</span></p>
+          <h1 id="pageTitle">Echanger, <em>sans exposer</em><br class="desktop-break"> le message.</h1>
+          <p class="intro-copy" id="introCopy">Le navigateur chiffre localement. Seul le paquet chiffré traverse le réseau.</p>
+        </div>
+        <div class="runtime-mark" aria-label="Chiffrement hybride actif">
+          <span class="runtime-ring ring-one"></span>
+          <span class="runtime-ring ring-two"></span>
+          <span class="runtime-core">CL</span>
+          <span class="runtime-caption">CRYPTO<br>LOCAL</span>
+        </div>
+      </section>
+
+      <section class="notice-bar" id="secureContextNotice" hidden role="alert">
+        <strong>Navigateur incompatible</strong>
+        <span>Ouvre l’interface avec l’adresse localhost fournie par le serveur pour activer Web Crypto.</span>
+      </section>
+
+      <section class="workspace" id="senderView" hidden aria-labelledby="senderTitle">
+        <div class="section-heading">
+          <div class="section-index">01</div>
+          <div>
+            <p class="eyebrow">EMISSION</p>
+            <h2 id="senderTitle">Nouveau message</h2>
+          </div>
+          <span class="section-side-note">CHIFFRE SUR CET APPAREIL</span>
+        </div>
+
+        <div class="route-grid">
+          <label class="field-block">
+            <span class="field-label">Adresse IP du destinataire <span class="required-mark">*</span></span>
+            <span class="input-shell"><span class="input-prefix">IP</span><input id="targetIp" type="text" inputmode="decimal" autocomplete="off" placeholder="192.168.1.24" value="127.0.0.1" aria-describedby="ipHelp"></span>
+            <span class="field-help" id="ipHelp">Sur un autre PC, indique son adresse IP locale.</span>
+          </label>
+          <div class="field-block">
+            <span class="field-label">Cle publique RSA <span class="required-mark">*</span></span>
+            <label class="file-drop" for="publicKeyFile" id="publicKeyDrop">
+              <span class="file-symbol" aria-hidden="true">+</span>
+              <span class="file-copy"><strong id="publicKeyName">Choisir le fichier PEM</strong><small>La cle publique peut etre partagee</small></span>
+              <span class="file-action">PARCOURIR</span>
+            </label>
+            <input class="visually-hidden" id="publicKeyFile" type="file" accept=".pem,.pub,text/plain" aria-label="Choisir la clé publique PEM">
+          </div>
+        </div>
+
+        <div class="key-fingerprint" id="keyFingerprint" hidden>
+          <span class="fingerprint-label">EMPREINTE SHA-256</span>
+          <code id="fingerprintValue"></code>
+          <button class="text-button" id="copyFingerprint" type="button">COPIER</button>
+        </div>
+
+        <label class="field-block message-field">
+          <span class="field-label">Message <span class="required-mark">*</span><span class="field-trailing" id="messageCount">0 / 20 000</span></span>
+          <textarea id="messageText" maxlength="20000" rows="7" placeholder="Ecrivez votre message ici..."></textarea>
+        </label>
+
+        <div class="send-row">
+          <p class="micro-note"><span class="micro-lock" aria-hidden="true"></span> Le texte clair ne quitte pas ce navigateur.</p>
+          <button class="primary-button" id="sendButton" type="button">
+            <span class="button-label">CHIFFRER ET ENVOYER</span><span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+        <div class="feedback" id="senderFeedback" aria-live="polite" hidden></div>
+      </section>
+
+      <section class="workspace receiver-workspace" id="receiverView" hidden aria-labelledby="receiverTitle">
+        <div class="section-heading">
+          <div class="section-index">02</div>
+          <div>
+            <p class="eyebrow">RECEPTION</p>
+            <h2 id="receiverTitle">Votre boîte de réception</h2>
+          </div>
+          <span class="inbox-count" id="inboxCount">0 MESSAGES</span>
+        </div>
+
+        <div class="receiver-grid">
+          <section class="key-panel" aria-labelledby="keyPanelTitle">
+            <div class="subsection-heading">
+              <span class="subsection-number">A</span>
+              <div><h3 id="keyPanelTitle">Vos cles</h3><p>La cle privee reste dans ce navigateur.</p></div>
+            </div>
+            <div class="key-generate-row">
+              <button class="secondary-button" id="generateKeys" type="button">GENERER UNE PAIRE RSA</button>
+              <span class="key-spec">RSA 2048 <i>·</i> SHA-256</span>
+            </div>
+            <label class="field-block passphrase-block">
+              <span class="field-label">Phrase secrete de protection</span>
+              <input id="passphrase" type="password" autocomplete="new-password" placeholder="10 caracteres minimum">
+              <span class="field-help">Elle protège la cle privee exportee. Garde-la secrete et memorise-la.</span>
+            </label>
+            <div class="download-status" id="keyStatus" aria-live="polite">Genere une paire ou charge une cle privee existante.</div>
+            <label class="field-block private-file-block">
+              <span class="field-label">Charger votre cle privee protegee</span>
+              <input id="privateKeyFile" type="file" accept=".json,.enc,application/json">
+            </label>
+            <button class="secondary-button unlock-button" id="unlockKey" type="button">DEVERROUILLER LA CLE</button>
+            <div class="key-ready" id="keyReady" hidden><span class="state-dot"></span> CLE PRIVEE DEVERROUILLEE EN LOCAL</div>
+          </section>
+
+          <section class="inbox-panel" aria-labelledby="inboxTitle">
+            <div class="subsection-heading inbox-heading">
+              <span class="subsection-number">B</span>
+              <div><h3 id="inboxTitle">Messages recus</h3><p>Le serveur ne conserve que les paquets chiffres.</p></div>
+              <span class="poll-indicator" id="pollIndicator"><span></span> VEILLE</span>
+            </div>
+            <div class="inbox-list" id="inboxList" aria-live="polite">
+              <div class="empty-state" id="emptyInbox">
+                <span class="empty-symbol" aria-hidden="true">···</span>
+                <strong>Aucun message pour le moment</strong>
+                <span>Les nouveaux paquets apparaitront ici.</span>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="feedback" id="receiverFeedback" aria-live="polite" hidden></div>
+      </section>
+
+      <section class="how-it-works" aria-label="Etapes de protection">
+        <div class="step-item"><span class="step-no">01</span><span>RSA protege la cle AES</span></div>
+        <span class="step-connector" aria-hidden="true"></span>
+        <div class="step-item"><span class="step-no">02</span><span>AES-GCM chiffre le texte</span></div>
+        <span class="step-connector" aria-hidden="true"></span>
+        <div class="step-item"><span class="step-no">03</span><span>TCP transporte le paquet</span></div>
+      </section>
+    </main>
+
+    <footer class="footer-bar">
+      <span>CRYPTOLINK <span class="footer-separator">/</span> DEMONSTRATION LOCALE</span>
+      <span id="footerRole">EN ATTENTE DU SERVEUR</span>
+    </footer>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
