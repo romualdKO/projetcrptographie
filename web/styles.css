@@ -62,7 +62,7 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 .eyebrow { display: flex; align-items: center; gap: 8px; margin: 0 0 15px; color: var(--aqua); font-size: 9px; font-weight: 500; letter-spacing: 1px; }
 .eyebrow-line { width: 18px; height: 1px; background: var(--mint); }
 .intro-row h1 { margin: 0; color: var(--ink); font-size: clamp(30px, 4vw, 44px); font-weight: 600; line-height: 1.13; }
-.intro-row h1 em { color: var(--mint); font-style: normal; }
+.intro-row h1 em { color: #45545a; font-style: normal; }
 .intro-copy { max-width: 510px; margin: 13px 0 0; color: var(--muted); font-size: 12px; line-height: 1.7; }
 .runtime-mark { position: relative; width: 158px; height: 158px; margin-right: 50px; display: grid; flex: 0 0 auto; place-items: center; }
 .runtime-ring { position: absolute; border: 1px solid #c3d2ca; border-radius: 50%; }
