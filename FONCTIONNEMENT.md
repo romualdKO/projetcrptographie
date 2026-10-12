@@ -1,6 +1,6 @@
 # Fonctionnement de CryptoLink
 
-La version web est lancee par `app.py`. Les interfaces Tkinter historiques restent disponibles dans `emetteur.py` et `recepteur.py`, mais ce guide decrit le nouveau parcours HTML/CSS/JavaScript.
+L'application est lancee par `app.py`. Son interface est construite avec HTML, CSS et JavaScript et sa cryptographie utilise Web Crypto dans le navigateur.
 
 ## Architecture
 
@@ -65,7 +65,3 @@ Le texte clair n'est pas inclus dans les requetes HTTP ou TCP. Le chiffrement es
 - PBKDF2 et AES-GCM protegent le fichier de cle privee au repos. La force pratique depend aussi de la phrase secrete choisie.
 - L'application n'authentifie pas l'expediteur et ne certifie pas l'identite de la cle publique. Il faut comparer son empreinte par un canal de confiance.
 - Le relais TCP n'utilise pas TLS ; le paquet reste chiffre de bout en bout, mais le protocole ne fournit pas de protection generale contre le deni de service.
-
-## Anciennes interfaces
-
-`emetteur.py` et `recepteur.py` sont des applications Tkinter autonomes. Elles utilisent egalement RSA-OAEP et AES-GCM, mais les fichiers de cles et le demarrage sont geres differemment. Pour le nouveau parcours web, suivre le README et lancer `app.py` sur les deux PC.

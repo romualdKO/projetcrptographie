@@ -6,7 +6,6 @@ Application locale de messagerie utilisant RSA-OAEP et AES-GCM. L'interface prin
 
 - `app.py` : serveur web local et relais TCP des paquets chiffres.
 - `web/index.html`, `web/styles.css`, `web/app.js` : interface responsive et chiffrement cote navigateur.
-- `emetteur.py`, `recepteur.py` : anciennes interfaces Tkinter, conservees comme version classique.
 - `FONCTIONNEMENT.md` : details du flux et des choix techniques.
 
 ## Prerequis
@@ -14,8 +13,6 @@ Application locale de messagerie utilisant RSA-OAEP et AES-GCM. L'interface prin
 - Python 3.9 ou plus recent recommande.
 - Navigateur moderne avec Web Crypto (Edge, Chrome ou Firefox).
 - Aucun paquet Python supplementaire pour l'interface web.
-
-Les anciennes interfaces Tkinter utilisent `cryptography` : `python -m pip install -r requirements.txt`.
 
 ## Lancer sur deux PC
 
