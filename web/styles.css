@@ -14,7 +14,7 @@
   --amber: #98601a;
   --danger: #b04440;
   --mono: Consolas, "Courier New", monospace;
-  --sans: "Segoe UI", Tahoma, sans-serif;
+  --sans: "Trebuchet MS", "Segoe UI", Tahoma, sans-serif;
 }
 
 * { box-sizing: border-box; }
@@ -29,7 +29,8 @@ body {
   background-image: linear-gradient(rgba(68, 112, 91, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(68, 112, 91, .045) 1px, transparent 1px);
   background-size: 34px 34px;
   font-family: var(--sans);
-  font-size: 14px;
+  font-size: 16px;
+  line-height: 1.5;
   letter-spacing: 0;
 }
 
@@ -214,4 +215,49 @@ button:focus-visible, input:focus-visible, textarea:focus-visible, a:focus-visib
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+}
+
+.brand-copy strong { font-size: 14px; }
+.brand-copy small { font-size: 10px; }
+.protocol-tag, .connection-state { font-size: 12px; }
+.eyebrow, .section-heading .eyebrow { font-size: 10px; }
+.intro-row h1 { font-size: clamp(38px, 4.2vw, 52px); line-height: 1.16; }
+.intro-copy { font-size: 15px; line-height: 1.75; }
+.runtime-caption { font-size: 10px; }
+.section-heading h2 { font-size: 21px; }
+.section-side-note, .inbox-count { font-size: 11px; }
+.field-label { font-size: 13px; font-weight: 600; }
+.field-trailing { font-size: 11px; }
+.input-shell input, .passphrase-block input { font-size: 14px; }
+.field-help { font-size: 12px; line-height: 1.6; }
+.file-copy strong { font-size: 12px; }
+.file-copy small { font-size: 11px; }
+.file-action { font-size: 10px; }
+.fingerprint-label, .key-fingerprint code, .text-button { font-size: 10px; }
+.message-field textarea { font-size: 15px; line-height: 1.7; }
+.micro-note { font-size: 11px; }
+.primary-button { font-size: 12px; }
+.feedback, .notice-bar { font-size: 13px; line-height: 1.65; }
+.subsection-heading h3 { font-size: 16px; }
+.subsection-heading p { font-size: 12px; }
+.secondary-button { font-size: 10px; }
+.key-spec, .download-status, .private-file-block input { font-size: 11px; }
+.private-file-block input::file-selector-button { font-size: 10px; }
+.key-ready, .poll-indicator { font-size: 10px; }
+.empty-state strong { font-size: 13px; }
+.empty-state > span:last-child { font-size: 11px; }
+.message-card-top { font-size: 10px; }
+.message-card-text { font-size: 14px; line-height: 1.7; }
+.message-card-error { font-size: 12px; }
+.discard-button { font-size: 10px; }
+.step-item { font-size: 11px; }
+.step-no, .footer-bar { font-size: 10px; }
+.toast { font-size: 13px; line-height: 1.5; }
+
+@media (max-width: 480px) {
+  .intro-row h1 { font-size: 34px; }
+  .intro-copy { font-size: 13px; }
+  .connection-state { font-size: 10px; }
+  .brand-copy small { font-size: 9px; }
+  .footer-bar { font-size: 9px; }
 }
