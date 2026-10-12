@@ -6,6 +6,8 @@ Application locale de messagerie utilisant RSA-OAEP et AES-GCM. L'interface prin
 
 - `app.py` : serveur web local et relais TCP des paquets chiffres.
 - `web/index.html`, `web/styles.css`, `web/app.js` : interface responsive et chiffrement cote navigateur.
+- `GUIDE_UTILISATION.md` : installation, lancement et utilisation sur un ou deux PC.
+- `RAPPORT_PROJET.md` : rapport technique a personnaliser pour le rendu.
 - `FONCTIONNEMENT.md` : details du flux et des choix techniques.
 
 ## Prerequis
