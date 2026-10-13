@@ -3,12 +3,12 @@
   --ink: #20353a;
   --muted: #566b6e;
   --faint: #65777a;
-  --canvas: #f3f7f3;
-  --panel: #ffffff;
-  --panel-raised: #edf3ee;
-  --field: #fbfdfb;
-  --line: #d4dfd8;
-  --line-light: #bacbc2;
+  --canvas: #e5efeb;
+  --panel: #f8fbf9;
+  --panel-raised: #e9f1ef;
+  --field: #ffffff;
+  --line: #c7d9d5;
+  --line-light: #b2c9ca;
   --mint: #c9e99c;
   --aqua: #167f7a;
   --amber: #98601a;
@@ -26,7 +26,7 @@ body {
   margin: 0;
   color: var(--ink);
   background-color: var(--canvas);
-  background-image: linear-gradient(rgba(68, 112, 91, .045) 1px, transparent 1px), linear-gradient(90deg, rgba(68, 112, 91, .045) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(48, 110, 105, .065) 1px, transparent 1px), linear-gradient(90deg, rgba(48, 110, 105, .065) 1px, transparent 1px), linear-gradient(122deg, #e3f0e7 0%, #dcebf0 54%, #e9f0e4 100%);
   background-size: 34px 34px;
   font-family: var(--sans);
   font-size: 16px;
