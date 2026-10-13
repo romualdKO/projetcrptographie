@@ -2,6 +2,8 @@
 
 Application locale de messagerie utilisant RSA-OAEP et AES-GCM. L'interface principale est une page HTML/CSS/JavaScript, sans React, Tailwind ni installation npm. La cryptographie est executee par Web Crypto dans le navigateur.
 
+La route `/` presente l'accueil anime. Les vues de travail sont disponibles sur `/emetteur` et `/recepteur` selon le role lance avec `app.py`.
+
 ## Fichiers
 
 - `app.py` : serveur web local et relais TCP des paquets chiffres.
@@ -26,7 +28,7 @@ Dans le dossier du projet :
 python app.py --role receiver
 ```
 
-La page s'ouvre sur `http://127.0.0.1:8765`. Dans la page, saisis une phrase secrete d'au moins 10 caracteres, puis clique sur **Generer une paire RSA**. Deux fichiers sont telecharges :
+La page d'accueil s'ouvre sur `http://127.0.0.1:8765`. Clique sur **Recepteur** dans la navigation. Saisis une phrase secrete d'au moins 10 caracteres, puis clique sur **Generer une paire RSA**. Deux fichiers sont telecharges :
 
 - `cle_publique.pem` : a transmettre au PC emetteur.
 - `cle_privee_protegee.json` : a garder sur le PC destinataire avec sa phrase secrete.
@@ -41,7 +43,7 @@ Copie le projet sur l'autre PC, puis lance :
 python app.py --role sender
 ```
 
-Dans la page, saisis l'IP du destinataire, choisis `cle_publique.pem`, ecris le message et clique sur **Chiffrer et envoyer**.
+Depuis l'accueil, ouvre l'interface **Emetteur**, puis saisis l'IP du destinataire, choisis `cle_publique.pem`, ecris le message et clique sur **Chiffrer et envoyer**.
 
 Le PC destinataire doit autoriser les connexions entrantes TCP sur le port `5000` dans son pare-feu. `127.0.0.1` ne fonctionne que si les deux roles tournent sur le meme PC.
 

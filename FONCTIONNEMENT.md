@@ -11,6 +11,14 @@ Chaque ordinateur lance localement le meme serveur web :
 
 Les pages s'ouvrent sur `http://127.0.0.1:8765`. Le serveur web n'est lie qu'a la boucle locale. Le PC destinataire ouvre en plus un relais TCP sur le port 5000 pour recevoir les paquets chiffres.
 
+## Les trois interfaces
+
+- `/` : page d'accueil avec presentation du parcours, demonstration visuelle animee du paquet et acces au role actif.
+- `/emetteur` : selection de la cle publique, composition et envoi du message.
+- `/recepteur` : generation/deverrouillage des cles et lecture des messages recus.
+
+La navigation est partagee entre les vues. Le serveur n'active qu'un role a la fois ; si l'autre vue est demandee, l'application affiche la commande a lancer pour demarrer une seconde instance. Les revelations au defilement et le trajet anime du paquet sont realises en CSS/JavaScript natifs, sans charger GSAP ni un service externe. Les animations sont reduites si le systeme demande `prefers-reduced-motion`.
+
 ## Cote destinataire
 
 1. Le navigateur genere une paire RSA-OAEP de 2048 bits via Web Crypto.

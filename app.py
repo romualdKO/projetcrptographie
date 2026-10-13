@@ -129,6 +129,8 @@ class RequestHandler(BaseHTTPRequestHandler):
         routes = {
             "/": (WEB_DIR / "index.html", "text/html; charset=utf-8"),
             "/index.html": (WEB_DIR / "index.html", "text/html; charset=utf-8"),
+            "/emetteur": (WEB_DIR / "index.html", "text/html; charset=utf-8"),
+            "/recepteur": (WEB_DIR / "index.html", "text/html; charset=utf-8"),
             "/styles.css": (WEB_DIR / "styles.css", "text/css; charset=utf-8"),
             "/app.js": (WEB_DIR / "app.js", "text/javascript; charset=utf-8"),
         }

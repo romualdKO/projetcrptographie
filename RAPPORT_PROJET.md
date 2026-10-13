@@ -120,7 +120,9 @@ Le paquet JSON transporte trois valeurs encodees en Base64 et un identifiant d'a
 
 ## 7. Realisation de l'interface
 
-L'interface est realisee en HTML, CSS et JavaScript natifs. Elle comporte un ecran d'emission, la selection du fichier public, l'affichage de son empreinte, un compteur de texte, la generation/deverrouillage des cles et une boite de reception. La feuille de style adapte la disposition aux petits ecrans. Aucun framework front-end ou serveur de compilation n'est requis.
+L'interface est realisee en HTML, CSS et JavaScript natifs et organisee en trois vues : une page d'accueil, l'ecran d'emission et l'ecran de reception. Une navigation commune relie les vues. Les routes `/emetteur` et `/recepteur` affichent le role associe au serveur lance ; si le role n'est pas actif, une explication et la commande de lancement correspondante sont affichees.
+
+L'accueil presente le parcours cryptographique, les deux roles et des liens vers les fonctions. CSS et IntersectionObserver animent l'arrivee des sections, tandis qu'un paquet visuel illustre le trajet des donnees. Les animations respectent le reglage `prefers-reduced-motion`. L'ecran d'emission comprend la selection du fichier public, l'affichage de son empreinte et la composition du message. L'ecran de reception comprend la generation/deverrouillage des cles et la boite de reception. La feuille de style adapte ces vues aux petits ecrans. Aucun framework front-end ou serveur de compilation n'est requis.
 
 ## 8. Tests et resultats
 

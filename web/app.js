@@ -11,6 +11,10 @@ const elements = Object.fromEntries([
   "copyFingerprint", "messageText", "messageCount", "sendButton", "senderFeedback",
   "passphrase", "generateKeys", "keyStatus", "privateKeyFile", "unlockKey", "keyReady",
   "inboxCount", "pollIndicator", "inboxList", "receiverFeedback", "toastRegion",
+  "homeView", "appView", "routeMismatch", "routeMismatchTitle", "routeMismatchDescription",
+  "routeMismatchCommand", "homeStatus", "homePrimaryLink", "homePrimaryLabel",
+  "homeSenderLink", "homeSenderCommand", "homeReceiverLink", "homeReceiverCommand",
+  "navHome", "navSender", "navReceiver",
 ].map((id) => [id, document.getElementById(id)]));
 
 const state = {
@@ -103,9 +107,57 @@ async function initialize() {
   try {
     const status = await getJson("/api/status");
     state.role = status.role;
+    const path = window.location.pathname.replace(/\/$/, "") || "/";
+    const requestedRole = path === "/emetteur" ? "sender" : path === "/recepteur" ? "receiver" : null;
+    const isHome = requestedRole === null;
+    const roleIsActive = requestedRole === status.role;
+
+    elements.homeView.hidden = !isHome;
+    elements.appView.hidden = isHome || !roleIsActive;
+    elements.routeMismatch.hidden = isHome || roleIsActive;
+    elements.senderView.hidden = !roleIsActive || requestedRole !== "sender";
+    elements.receiverView.hidden = !roleIsActive || requestedRole !== "receiver";
+
+    for (const [role, link] of [["sender", elements.navSender], ["receiver", elements.navReceiver]]) {
+      if (requestedRole === role) link.setAttribute("aria-current", "page");
+      else link.removeAttribute("aria-current");
+    }
+    if (isHome) elements.navHome.setAttribute("aria-current", "page");
+    else elements.navHome.removeAttribute("aria-current");
+
+    if (isHome) {
+      const activePath = status.role === "sender" ? "/emetteur" : "/recepteur";
+      const activeLabel = status.role === "sender" ? "OUVRIR L'EMETTEUR" : "OUVRIR LE RECEPTEUR";
+      elements.homePrimaryLink.href = activePath;
+      elements.homePrimaryLabel.textContent = activeLabel;
+      elements.homeStatus.textContent = status.role === "receiver"
+        ? "Recepteur actif · ecoute TCP " + status.tcpPort
+        : "Emetteur actif · chiffrement local pret";
+      elements.footerRole.textContent = status.role === "receiver"
+        ? `RELAIS TCP :${status.tcpPort}`
+        : "ACCUEIL · EMETTEUR ACTIF";
+      elements.homeSenderLink.hidden = status.role !== "sender";
+      elements.homeSenderCommand.hidden = status.role === "sender";
+      elements.homeReceiverLink.hidden = status.role !== "receiver";
+      elements.homeReceiverCommand.hidden = status.role === "receiver";
+      setConnection(status.role !== "receiver" || status.listenerReady,
+        status.role === "receiver" ? (status.listenerReady ? "Ecoute active" : "Ecoute indisponible") : "Serveur local pret");
+      if (status.listenerError) elements.homeStatus.textContent = "Erreur d'ecoute : " + status.listenerError;
+      initializeScrollReveals();
+      return;
+    }
+
+    if (requestedRole !== status.role) {
+      const roleName = requestedRole === "sender" ? "emetteur" : "recepteur";
+      const activeName = status.role === "sender" ? "emetteur" : "recepteur";
+      elements.routeMismatchTitle.textContent = `Cette instance est lancee en mode ${activeName}.`;
+      elements.routeMismatchDescription.textContent = `Pour ouvrir l'interface ${roleName}, lance une seconde instance dans un autre terminal.`;
+      elements.routeMismatchCommand.textContent = `python app.py --role ${requestedRole} --port 8766`;
+      setConnection(true, `Mode ${activeName}`);
+      return;
+    }
+
     const isSender = status.role === "sender";
-    elements.senderView.hidden = !isSender;
-    elements.receiverView.hidden = isSender;
     elements.roleCaption.textContent = isSender ? "/ EMETTEUR" : "/ RECEPTEUR";
     elements.footerRole.textContent = isSender ? "POSTE EMETTEUR" : `RELAIS TCP :${status.tcpPort}`;
     elements.introCopy.textContent = isSender
@@ -125,6 +177,24 @@ async function initialize() {
     setConnection(false, "Serveur indisponible");
     toast(error.message, "error");
   }
+}
+
+function initializeScrollReveals() {
+  const revealItems = document.querySelectorAll("[data-reveal]");
+  if (!("IntersectionObserver" in window)) {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    for (const entry of entries) {
+      if (!entry.isIntersecting) continue;
+      entry.target.classList.add("is-visible");
+      observer.unobserve(entry.target);
+    }
+  }, { threshold: 0.14, rootMargin: "0px 0px -35px 0px" });
+
+  revealItems.forEach((item) => observer.observe(item));
 }
 
 async function selectPublicKey(file) {

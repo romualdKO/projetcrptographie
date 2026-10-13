@@ -18,6 +18,11 @@
           <small>MESSAGERIE CHIFFREE</small>
         </span>
       </a>
+      <nav class="primary-nav" aria-label="Navigation principale">
+        <a class="nav-link" id="navHome" href="/">Accueil</a>
+        <a class="nav-link" id="navSender" href="/emetteur">Emetteur</a>
+        <a class="nav-link" id="navReceiver" href="/recepteur">Recepteur</a>
+      </nav>
       <div class="topbar-meta">
         <span class="protocol-tag">RSA-OAEP <i></i> AES-256-GCM</span>
         <span class="connection-state" id="connectionState"><span class="state-dot"></span><span id="connectionLabel">Connexion...</span></span>
@@ -25,6 +30,66 @@
     </header>
 
     <main>
+      <section class="home-view" id="homeView" hidden>
+        <section class="home-hero" aria-labelledby="homeTitle">
+          <div class="home-copy" data-reveal>
+            <p class="eyebrow"><span class="eyebrow-line"></span> CRYPTOLINK <span>/ MESSAGERIE LOCALE</span></p>
+            <h1 id="homeTitle">Le secret voyage.<br><em>Le texte, jamais.</em></h1>
+            <p class="home-lead">Un echange chiffre de bout en bout. La cle publique ouvre le chemin ; la cle privee ne quitte jamais son navigateur.</p>
+            <div class="hero-actions">
+              <a class="primary-button hero-cta" id="homePrimaryLink" href="/emetteur"><span id="homePrimaryLabel">OUVRIR L'EMETTEUR</span><span class="button-arrow" aria-hidden="true">→</span></a>
+              <a class="quiet-link" href="#parcours">Voir le parcours <span aria-hidden="true">↓</span></a>
+            </div>
+            <p class="home-status" id="homeStatus" aria-live="polite">Initialisation du service local...</p>
+          </div>
+
+          <div class="hero-visual" data-reveal aria-label="Schema anime du chiffrement et du transfert">
+            <div class="visual-topline"><span>FLUX CRYPTOGRAPHIQUE</span><span><i></i> LIVE / LOCAL</span></div>
+            <div class="flow-scene">
+              <div class="flow-grid" aria-hidden="true"></div>
+              <div class="flow-path" aria-hidden="true"><span class="flow-packet"></span></div>
+              <div class="flow-node node-origin"><span class="node-index">01</span><span class="node-icon key-icon" aria-hidden="true">K</span><strong>Cle publique</strong><small>RSA-OAEP</small></div>
+              <div class="flow-node node-cipher"><span class="node-index">02</span><span class="node-icon cipher-icon" aria-hidden="true">A</span><strong>Message chiffre</strong><small>AES-256-GCM</small></div>
+              <div class="flow-node node-destination"><span class="node-index">03</span><span class="node-icon lock-icon" aria-hidden="true">L</span><strong>Cle privee</strong><small>RECEPTEUR SEUL</small></div>
+              <div class="flow-stamp">TEXTE CLAIR<br><b>RESTE LOCAL</b></div>
+            </div>
+            <div class="visual-bottomline"><span>RSA-OAEP-SHA256</span><span class="visual-divider"></span><span>AES-GCM</span><span class="visual-divider"></span><span>TCP :5000</span></div>
+          </div>
+        </section>
+
+        <section class="home-method" id="parcours" aria-labelledby="methodTitle">
+          <div class="home-section-heading" data-reveal>
+            <p class="eyebrow"><span class="eyebrow-line"></span> TROIS ETAPES, UN SEUL FLUX</p>
+            <h2 id="methodTitle">La protection, <em>du debut a la fin.</em></h2>
+          </div>
+          <div class="method-rail">
+            <article class="method-step" data-reveal><span class="method-number">01 <i> / CLE</i></span><h3>Une paire pour deux roles</h3><p>Le recepteur garde sa cle privee et partage uniquement la cle publique.</p><span class="method-underline" aria-hidden="true"></span></article>
+            <article class="method-step" data-reveal><span class="method-number">02 <i> / CHIFFREMENT</i></span><h3>Le message devient paquet</h3><p>AES-GCM chiffre le texte ; RSA protege la cle AES temporaire.</p><span class="method-underline" aria-hidden="true"></span></article>
+            <article class="method-step" data-reveal><span class="method-number">03 <i> / RECEPTION</i></span><h3>La cle privee termine le trajet</h3><p>Le navigateur destinataire seul peut retrouver le message original.</p><span class="method-underline" aria-hidden="true"></span></article>
+          </div>
+        </section>
+
+        <section class="home-modes" aria-labelledby="modesTitle">
+          <div class="home-section-heading" data-reveal>
+            <p class="eyebrow"><span class="eyebrow-line"></span> CHOISIR UN ROLE</p>
+            <h2 id="modesTitle">Pret a <em>commencer ?</em></h2>
+          </div>
+          <div class="mode-grid">
+            <article class="mode-option" data-reveal><span class="mode-index">A / EMISSION</span><h3>Envoyer un message</h3><p>Selectionne la cle publique, redige le texte et transmets le paquet chiffre.</p><a class="mode-link" id="homeSenderLink" href="/emetteur">Ouvrir l'emetteur <span aria-hidden="true">→</span></a><code class="mode-command" id="homeSenderCommand" hidden>python app.py --role sender</code></article>
+            <article class="mode-option" data-reveal><span class="mode-index">B / RECEPTION</span><h3>Recevoir un message</h3><p>Genere ta paire RSA, deverrouille la cle privee et lis les messages recus.</p><a class="mode-link" id="homeReceiverLink" href="/recepteur">Ouvrir le recepteur <span aria-hidden="true">→</span></a><code class="mode-command" id="homeReceiverCommand" hidden>python app.py --role receiver</code></article>
+          </div>
+        </section>
+      </section>
+
+      <section class="route-mismatch" id="routeMismatch" hidden role="status">
+        <p class="eyebrow"><span class="eyebrow-line"></span> MODE A LANCER</p>
+        <h1 id="routeMismatchTitle">Cette interface n'est pas active sur ce serveur.</h1>
+        <p id="routeMismatchDescription">Le serveur local est demarre avec un autre role.</p>
+        <code id="routeMismatchCommand">python app.py --role sender</code>
+        <a class="quiet-link" href="/">Retour a l'accueil <span aria-hidden="true">←</span></a>
+      </section>
+
+      <div id="appView" hidden>
       <section class="intro-row" aria-labelledby="pageTitle">
         <div>
           <p class="eyebrow"><span class="eyebrow-line"></span> CANAL PRIVE <span id="roleCaption">/ INITIALISATION</span></p>
@@ -150,6 +215,7 @@
         <span class="step-connector" aria-hidden="true"></span>
         <div class="step-item"><span class="step-no">03</span><span>TCP transporte le paquet</span></div>
       </section>
+      </div>
     </main>
 
     <footer class="footer-bar">

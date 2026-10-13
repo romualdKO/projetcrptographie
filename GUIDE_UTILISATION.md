@@ -22,10 +22,10 @@ Sur le PC qui doit recevoir les messages :
 python app.py --role receiver
 ```
 
-3. La page du recepteur s'ouvre sur `http://127.0.0.1:8765`.
+3. La page d'accueil s'ouvre sur `http://127.0.0.1:8765`.
 4. Laisse la fenetre PowerShell ouverte pendant l'utilisation.
 
-Le serveur web reste local a l'ordinateur. En parallele, le programme ouvre le port TCP `5000` sur le reseau local pour recevoir les paquets chiffres. L'adresse IP a donner a l'emetteur est affichee dans PowerShell.
+La page d'accueil presente le trajet du paquet et les deux roles. Clique sur **Ouvrir le recepteur** ou **Recepteur** dans la navigation pour afficher l'interface de reception. Le serveur web reste local a l'ordinateur. En parallele, le programme ouvre le port TCP `5000` sur le reseau local pour recevoir les paquets chiffres. L'adresse IP a donner a l'emetteur est affichee dans PowerShell.
 
 ## 3. Creer les cles du destinataire
 
@@ -51,9 +51,12 @@ Sur le PC qui envoie le message :
 python app.py --role sender
 ```
 
-3. La page de l'emetteur s'ouvre sur `http://127.0.0.1:8765`.
+3. La page d'accueil s'ouvre sur `http://127.0.0.1:8765`.
+4. Clique sur **Ouvrir l'emetteur** ou **Emetteur** dans la navigation.
 
 Si l'emetteur et le recepteur tournent sur deux PC differents, chaque application utilise son propre port web `8765`. C'est normal : `127.0.0.1` designe toujours l'ordinateur courant.
+
+Les interfaces sont aussi accessibles directement sur `/emetteur` et `/recepteur`. Si un role n'est pas actif sur le serveur actuel, la page indique la commande a lancer dans un autre terminal.
 
 ## 5. Envoyer un message
 
@@ -95,6 +98,8 @@ python app.py --role sender --port 8765 --tcp-port 5000
 ```
 
 Utilise `127.0.0.1` comme adresse du destinataire. Genere les cles dans le navigateur du recepteur, puis charge la cle publique dans l'emetteur.
+
+L'accueil du recepteur est disponible sur `http://127.0.0.1:8766` et celui de l'emetteur sur `http://127.0.0.1:8765`.
 
 ## 8. Depannage
 
